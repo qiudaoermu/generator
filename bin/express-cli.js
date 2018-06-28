@@ -211,6 +211,7 @@ function createApplication (name, dir) {
 
   if (program.view) {
     // Copy view templates
+    console.log(program.view)
     mkdir(dir, 'views')
     pkg.dependencies['http-errors'] = '~1.6.2'
     switch (program.view) {
@@ -234,6 +235,9 @@ function createApplication (name, dir) {
         break
       case 'twig':
         copyTemplateMulti('views', dir + '/views', '*.twig')
+        break
+      case 'swig':
+        copyTemplateMulti('views', dir + '/views', '*.html')
         break
       case 'vash':
         copyTemplateMulti('views', dir + '/views', '*.vash')
@@ -278,6 +282,7 @@ function createApplication (name, dir) {
 
   // Template support
   switch (program.view) {
+    console.log(prpgram.view)
     case 'dust':
       app.locals.modules.adaro = 'adaro'
       app.locals.view = {
@@ -314,6 +319,10 @@ function createApplication (name, dir) {
       app.locals.view = { engine: 'vash' }
       pkg.dependencies.vash = '~0.12.4'
       break
+    case 'swig':
+        app.locals.view = { engine: 'swig' }
+        pkg.dependencies.vash = '^1.4.2'
+        break
     default:
       app.locals.view = false
       break
